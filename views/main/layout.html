@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>shaohua博客</title>
+  <link rel="stylesheet" href="/public/css/bootstrap.min.css">
+  <link rel="stylesheet" href="/public/css/base.css">
+  <script src="/public/js/libsJS/jquery-1.10.1.min.js"></script>
+  <script src="/public/js/libsJS/bootstrap.min.js"></script>
+</head>
+<body>
+    <div class="wrapper">
+        <nav class="navbar navbar-default">
+            <ul class="nav navbar-nav">
+                {%if category == '' %}
+                <li class="active" ><a href="/">首页</a></li>
+                {%else%}
+                <li><a href="/">首页</a></li>
+                {%endif%}
+                {% for cate in categories%}
+                {%if category == cate.id %}
+                <li class="active"><a href="/?category={{cate.id}}">{{cate.name}}</a></li>
+                {%else%}
+                <li><a href="/?category={{cate.id}}">{{cate.name}}</a></li>
+                {%endif%}
+                {% endfor %}
+            </ul>
+        </nav>
+        {% block content %}{% endblock  %}
+        <div class="form-box">
+            {% if userInfo._id %}
+            <div class="panel panel-default" id="admin">
+                <div class="panel-heading">
+                    <h3 class="panel-title">用户信息</h3>
+                </div>
+                <div class="panel-body">
+                    <h2>{{ userInfo.username }}</h2>
+                    {% if !userInfo.isAdmin %}
+                    <p>你好，欢迎登陆我的博客</p>
+                    {% else %}
+                    <p>你好，管理员<a href="/admin">进入管理后台</a><p>
+                    {% endif %}    
+                    <a href="javascript:;" class="logout">退出</a>
+                </div>
+            </div>
+            {% else %}
+            <div class="panel panel-default" id="regist">
+                <div class="panel-heading">
+                    <h3 class="panel-title">注册</h3>
+                </div>
+                <div class="panel-body">
+                    <form class="form-horizontal"  action="/api/user/register" method="post" name="registSubmit" id="registSubmit">
+                        <div class="form-group">
+                            <label for="username" class="col-sm-2 control-label">用户名</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" name="username" id="rusername" placeholder="username">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="password" class="col-sm-2 control-label">密码</label>
+                            <div class="col-sm-10">
+                                <input type="password" class="form-control" name="password" id="rpassword" placeholder="Password">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="repassword" class="col-sm-2 control-label">密码</label>
+                            <div class="col-sm-10">
+                                <input type="password" class="form-control" name="repassword" id="repassword" placeholder="Password">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-sm-offset-2 col-sm-10">
+                                <button type="submit" class="btn btn-default">Regist</button><span class="message"></span>
+                            </div>
+                        </div>
+                    </form>
+                    <p class="hint">已有账号/<a href="javascript:;">马上登陆</a></p>
+                </div>
+            </div>
+            <div class="panel panel-default panel-show" id="login">
+                <div class="panel-heading">
+                    <h3 class="panel-title">登录</h3>
+                </div>
+                <div class="panel-body">
+                    <form class="form-horizontal" action="/api/user/login" method="post" name="loginSubmit" id="loginSubmit">
+                        <div class="form-group">
+                            <label for="username" class="col-sm-2 control-label">用户名</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" id="username" placeholder="username">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="password" class="col-sm-2 control-label">密码</label>
+                            <div class="col-sm-10">
+                                <input type="password" class="form-control" id="password" placeholder="Password">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-sm-offset-2 col-sm-10">
+                            <div class="checkbox">
+                                <label>
+                                <input type="checkbox"> Remember me
+                                </label>
+                            </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-sm-offset-2 col-sm-10">
+                                <button type="submit" class="btn btn-default">Sign in</button><span class="message"></span>
+                            </div>
+                        </div>
+                    </form>
+                    <p class="hint">还没注册/<a href="javascript:;">去注册</a></p>
+                </div>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+    <script src="/public/js/apiJS/login_out.js"></script>
+</body>
+</html>

@@ -1,1 +1,76 @@
 about nodeJS learning
+
+用户发出Http请求-->url-->解析路由-->找到匹配的规则-->执行指定的绑定函数，返回对应内容至用户
+
+模块开发数据
+    用户
+    栏目
+    内容
+    评论
+编码顺序
+    通过Schema定义设计数据存储结构
+    功能逻辑
+    页面展示
+
+mongodb数据库的使用
+
+    1.开启mongodb数据库  https://www.mongodb.com
+        cd d:/Mongo/bin/mongod --dbpath=D:\myresume\blog\db --port=21017   回车运行
+    2.连接mongodb数据库
+        a.mongo.exe连接
+        b.使用 Robomongo客户端 RoBo 3T
+    3.使用mongoose操作数据库
+        http://mongoosejs.com/
+        mongooes.connect('mongodb://localhost:27018/blog',function(err){
+            if (err) {
+                console.log('数据库连接失败')
+            } else {
+                console.log('数据库连接成功')
+            }
+        })
+        a.创建一个schema对象 用户的表结构对象
+            new mongoose.Schema({})
+        b.通过操作model模型
+            mongoose.model(名称, schema对象)
+            .方法-->类方法/静方法
+            #方法-->对象方法
+swig模板 https://github.com/paularmstrong/swig / https://www.jianshu.com/p/f0bffc42c1ce
+    1.变量 {{ value }}
+    2.模板继承 
+        {% extends './layout.html' %}
+        {% block content %} {% endblock %}
+    3.include模板
+        {% include './includes/header.html' %}
+    4.if语句
+        {% if 条件 %}
+            语句一
+        {% else %}
+            语句二
+        {% endif %}
+    5.for循环
+        a. {% for key, val in arr %}
+
+            {% endfor %}
+        b.内置变量
+
+    6.过滤器
+        时间格式2018-01-00
+            {{ time |date('Y-m-d H:i:s', -8*60)}}
+        首字母大写
+            {{ name|title }}
+    7.配置模板
+        1.app.engine('html', swig.renderFile);
+        2.app.set('views', path.join(__dirname, 'views'))
+        3.app.set('view engine', 'html');
+        4.swig.setDefaults({cache: false});
+
+cookies插件 https://github.com/pillarjs/cookies
+    request.cookies = new Cookies( request, response, [ options ] )
+    request.cookies.set( name, [ value ], [ options ] )
+    request.cookies.get( name, [ options ] )
+body-parser插件 https://github.com/expressjs/body-parser
+    app.use(bodyParser.urlencoded({ extended: false }))
+    req.body
+
+Promise对象
+    new Promise( function(resolve, reject) {...} /* executor */  );
